@@ -8,6 +8,13 @@ This is a **dev/test learning sample, not a production HTTP server**. Live
 end-to-end preview qualification is pending; local checks do not prove a successful
 cloud build or deployment.
 
+## Preview
+
+The visual showcase is available at `/demo`; `/` remains the original plain-text
+response.
+
+![Python sample at /demo with a forest-green greeting, Python code example, and links to the sample endpoints](https://github.com/user-attachments/assets/58dc465a-1665-485a-9517-234bec7b8a0c)
+
 ## Features
 
 - `/` returns HTTP 200 and `App Service Builder / python-web: Hello`.
