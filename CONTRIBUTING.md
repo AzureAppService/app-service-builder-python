@@ -48,12 +48,12 @@ chances of your issue being dealt with quickly:
   causing the problem (line of code or commit)
 
 You can file new issues by providing the above information at
-https://github.com/Azure-Samples/app-service-builder-python/issues/new .
+https://github.com/AzureAppService/app-service-builder-python/issues/new .
 
 ### <a name="submit-pr"></a> Submitting a Pull Request (PR)
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-* Search the repository's [pull requests](https://github.com/Azure-Samples/app-service-builder-python/pulls) for an open or closed PR
+* Search the repository's [pull requests](https://github.com/AzureAppService/app-service-builder-python/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
 
 * Make your changes in a new git fork:

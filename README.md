@@ -33,7 +33,7 @@ cloud build or deployment.
 
 ### Installation
 
-Fork [this repository](https://github.com/Azure-Samples/app-service-builder-python/fork)
+Fork [this repository](https://github.com/AzureAppService/app-service-builder-python/fork)
 to your own GitHub account. Clone **your fork**, replacing `<your-github-account>`:
 
 ```sh
@@ -93,7 +93,7 @@ using your Private Preview access:
    Create an app in a location available to your preview.
 2. Authorize the GitHub source connection for **your fork**. If your organization
    restricts repository access, have an authorized owner grant access to that
-   repository. Do not select the upstream Azure-Samples repository.
+   repository. Do not select the upstream AzureAppService repository.
 3. Select your fork's **`main` branch** and the **repository root** as the app
    source root. Keep `app.py`, `requirements.txt`, and `builder.yaml` together
    at that root, along with `demo.html`; there is no `samples/python-web`
