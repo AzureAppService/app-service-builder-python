@@ -39,27 +39,16 @@ class HTTPTests(unittest.TestCase):
         finally:
             connection.close()
 
-    def test_default_greeting(self):
-        self.assert_response("/", 200, "App Service Builder / python-web: Hello\n")
-
     def test_health(self):
         self.assert_response("/health", 200, "OK\n")
 
     def test_unknown_path(self):
         self.assert_response("/not-found", 404, "Not found\n")
 
-    def test_public_greeting(self):
-        os.environ["SAMPLE_GREETING"] = "Welcome"
-        self.assert_response("/", 200, "App Service Builder / python-web: Welcome\n")
-
-    def test_empty_greeting_uses_default(self):
-        os.environ["SAMPLE_GREETING"] = ""
-        self.assert_response("/", 200, "App Service Builder / python-web: Hello\n")
-
     def test_query_does_not_change_route(self):
         self.assert_response("/health?check=1", 200, "OK\n")
 
-    def get_demo(self, path="/demo"):
+    def get_home(self, path="/"):
         connection = HTTPConnection(*self.server.server_address, timeout=5)
         try:
             connection.request("GET", path)
@@ -72,26 +61,54 @@ class HTTPTests(unittest.TestCase):
         finally:
             connection.close()
 
-    def test_demo_default_greeting_and_routes(self):
-        body = self.get_demo()
+    def test_root_default_greeting_and_routes(self):
+        body = self.get_home()
+        self.assertTrue(body.startswith("<!doctype html>"))
+        self.assertIn("<title>Python sample", body)
         self.assertIn('<h1 id="greeting">Hello', body)
         self.assertIn("App Service Builder / python-web: Hello", body)
-        for path in ("/", "/health", "/demo"):
+        for path in ("/", "/health"):
             self.assertIn(f'href="{path}"', body)
         self.assertNotIn("{{GREETING}}", body)
+        self.assertNotIn("/demo", body)
 
-    def test_demo_escapes_public_greeting(self):
+    def test_root_escapes_public_greeting(self):
         os.environ["SAMPLE_GREETING"] = '<script>alert("Hi")</script> & café'
-        body = self.get_demo()
+        os.environ["PRIVATE_TEST_VALUE"] = "must-not-appear"
+        body = self.get_home()
         self.assertIn("&lt;script&gt;alert(&quot;Hi&quot;)&lt;/script&gt; &amp; café", body)
         self.assertNotIn("<script>", body)
+        self.assertNotIn(os.environ["PRIVATE_TEST_VALUE"], body)
 
-    def test_demo_empty_greeting_uses_default(self):
+    def test_root_public_greeting(self):
+        os.environ["SAMPLE_GREETING"] = "Welcome"
+        self.assertIn('<h1 id="greeting">Welcome', self.get_home())
+
+    def test_root_empty_greeting_uses_default(self):
         os.environ["SAMPLE_GREETING"] = ""
-        self.assertIn('<h1 id="greeting">Hello', self.get_demo())
+        self.assertIn('<h1 id="greeting">Hello', self.get_home())
 
-    def test_demo_query_does_not_change_route(self):
-        self.assertEqual(self.get_demo("/demo?preview=1"), self.get_demo())
+    def test_root_query_does_not_change_route(self):
+        self.assertEqual(self.get_home("/?preview=1"), self.get_home())
+
+    def test_removed_route_returns_404(self):
+        for path in ("/demo", "/demo?preview=1"):
+            self.assert_response(path, 404, "Not found\n")
+
+    def test_unsupported_methods_remain_unsupported(self):
+        for path in ("/", "/health"):
+            for method in ("POST", "HEAD"):
+                with self.subTest(path=path, method=method):
+                    connection = HTTPConnection(*self.server.server_address, timeout=5)
+                    try:
+                        connection.request(method, path)
+                        response = connection.getresponse()
+                        body = response.read()
+                        self.assertEqual(response.status, 501)
+                        if method == "HEAD":
+                            self.assertEqual(body, b"")
+                    finally:
+                        connection.close()
 
     def test_bind_does_not_require_reverse_dns(self):
         self.assertEqual(self.server.server_name, "builder-python-sample")

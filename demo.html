@@ -63,7 +63,7 @@ FORM: Responsive two-column specimen; a restrained, brief-led light canvas.
     .directory-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 15px; }
     .directory h2 { font-size: 21px; margin: 0; }
     .directory-head p { font-size: 13px; color: var(--muted); margin: 0; }
-    .routes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .routes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
     .route { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 8px; border-top: 1px solid var(--line); padding: 20px 0 10px; text-decoration: none; }
     .route code { color: var(--green); font: 600 18px/1.4 Consolas, "Liberation Mono", monospace; }
     .route p { grid-column: 1 / -1; color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0; }
@@ -104,7 +104,7 @@ FORM: Responsive two-column specimen; a restrained, brief-led light canvas.
     <header>
       <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>App Service Builder</div>
       <nav aria-label="Sample navigation">
-        <a href="/">Text response</a>
+        <a href="/">Sample home</a>
         <a href="https://builderapps.azure.com/docs/">Documentation <span aria-hidden="true">↗</span></a>
       </nav>
     </header>
@@ -115,7 +115,7 @@ FORM: Responsive two-column specimen; a restrained, brief-led light canvas.
           <h2>A little Python.<br>A place to begin.</h2>
           <p class="intro">A small HTTP app built with Python's standard library. Explore the sample, change the greeting, and learn to deploy with App Service Builder.</p>
           <div class="actions">
-            <a class="button" href="/">View text response <span aria-hidden="true">↗</span></a>
+            <a class="button" href="/health">Open health endpoint <span aria-hidden="true">↗</span></a>
             <a class="text-link" href="https://builderapps.azure.com/docs/quickstarts/portal/">Deployment guide</a>
           </div>
         </div>
@@ -135,11 +135,10 @@ greeting = (
         </div>
       </section>
       <section class="directory" aria-labelledby="routes-title">
-        <div class="directory-head"><h2 id="routes-title">Small app. Three routes.</h2><p>No frameworks. No third-party packages.</p></div>
+        <div class="directory-head"><h2 id="routes-title">Small app. Two routes.</h2><p>No frameworks. No third-party packages.</p></div>
         <div class="routes">
-          <a class="route" href="/"><code>/</code><span class="arrow" aria-hidden="true">↗</span><p>The original plain-text response, with your public greeting.</p></a>
+          <a class="route" href="/"><code>/</code><span class="arrow" aria-hidden="true">↗</span><p>This HTML introduction, with your public greeting.</p></a>
           <a class="route" href="/health"><code>/health</code><span class="arrow" aria-hidden="true">↗</span><p>A simple health endpoint. Returns HTTP 200 and OK.</p></a>
-          <a class="route" href="/demo"><code>/demo</code><span class="arrow" aria-hidden="true">↗</span><p>This visual introduction to the Python sample.</p></a>
         </div>
       </section>
     </main>

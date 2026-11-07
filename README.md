@@ -10,18 +10,17 @@ cloud build or deployment.
 
 ## Preview
 
-The visual showcase is available at `/demo`; `/` remains the original plain-text
-response.
+The visual showcase is served directly at `/`, without a redirect.
 
-![Python sample at /demo with a forest-green greeting, Python code example, and links to the sample endpoints](https://github.com/user-attachments/assets/58dc465a-1665-485a-9517-234bec7b8a0c)
+![Python sample with a forest-green greeting, Python code example, and links to the sample endpoints](https://github.com/user-attachments/assets/58dc465a-1665-485a-9517-234bec7b8a0c)
 
 ## Features
 
-- `/` returns HTTP 200 and `App Service Builder / python-web: Hello`.
+- `/` returns HTTP 200 and `text/html; charset=utf-8`, displaying the public greeting.
 - `/health` returns HTTP 200 and `OK`; unknown paths return HTTP 404.
-- `/demo` is a responsive, dependency-free visual introduction with the current
+- `/` is a responsive, dependency-free visual introduction with the current
   public greeting, a Python configuration example, and links to the real routes.
-  The original `/` and `/health` responses are unchanged.
+  `/health` retains its plain-text response.
 - `SAMPLE_GREETING` changes the deliberately public greeting.
 - Root-level `builder.yaml` explicitly selects Python 3.14, the startup command
   `python app.py`, and `/health`. It relies on the single-component defaults for
@@ -78,14 +77,14 @@ curl -i http://localhost:8080/health
 curl -i http://localhost:8080/not-found
 ```
 
-Expect HTTP 200 with `App Service Builder / python-web: Hello`, HTTP 200 with `OK`,
+Expect HTTP 200 with HTML displaying `Hello`, HTTP 200 with `OK`,
 and HTTP 404 with `Not found`, respectively. Stop the server with Ctrl+C.
 Do not override `PORT`: this sample always listens on 8080.
 
-Open [http://localhost:8080/demo](http://localhost:8080/demo) in a browser for the
+Open [http://localhost:8080/](http://localhost:8080/) in a browser for the
 visual showcase. It uses local inline styles and system fonts; no JavaScript,
 external assets, or package installation is needed. `SAMPLE_GREETING` is displayed
-as escaped text on this page as well as in the original plain-text response.
+as escaped text on this page.
 Keep `demo.html` alongside `app.py`; the server loads it relative to the script,
 not the current working directory.
 
@@ -127,7 +126,7 @@ SAMPLE_GREETING="Welcome" python3 app.py
 ```
 
 On Windows PowerShell set `$env:SAMPLE_GREETING = "Welcome"` and run `python app.py`.
-The root response becomes `App Service Builder / python-web: Welcome`.
+The root HTML displays `Welcome`.
 An unset or empty value uses `Hello`. **Never put secrets or personal data in this
 setting**: the value is returned publicly over HTTP.
 
@@ -170,8 +169,9 @@ python3 -m unittest discover -s tests -v
 ```
 
 On Windows use `python` instead of `python3`. Tests start owned servers on
-ephemeral loopback ports, check text and HTML responses, public greetings and
-HTML escaping, and shut down afterward.
+ephemeral loopback ports, check root HTML, health text, public greetings,
+HTML escaping, query strings, 404s (including the removed showcase route), and
+unsupported methods returning 501, and shut down afterward.
 They do not deploy to Azure or require credentials.
 
 The build contract remains Python 3.14, `python app.py`, port 8080, and

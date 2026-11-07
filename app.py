@@ -26,13 +26,10 @@ class Handler(BaseHTTPRequestHandler):
         content_type = "text/plain; charset=utf-8"
         if path == "/health":
             status, body = 200, "OK\n"
-        elif path == "/demo":
+        elif path == "/":
             greeting = os.environ.get("SAMPLE_GREETING") or "Hello"
             status, body = 200, DEMO_TEMPLATE.replace("{{GREETING}}", escape(greeting))
             content_type = "text/html; charset=utf-8"
-        elif path == "/":
-            greeting = os.environ.get("SAMPLE_GREETING") or "Hello"
-            status, body = 200, f"App Service Builder / python-web: {greeting}\n"
         else:
             status, body = 404, "Not found\n"
         content = body.encode("utf-8")
