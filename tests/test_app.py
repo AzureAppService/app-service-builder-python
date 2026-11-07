@@ -2,9 +2,17 @@ import os
 import threading
 import unittest
 from http.client import HTTPConnection
+from pathlib import Path
 from unittest.mock import patch
 
 from app import Handler, SampleHTTPServer
+
+
+class DocumentationTests(unittest.TestCase):
+    def test_readme_docs_host(self):
+        readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(encoding="utf-8")
+        self.assertIn("https://builder.appservice.azure.com/docs/", readme)
+        self.assertNotIn("https://builderapps.azure.com/docs", readme)
 
 
 class HTTPTests(unittest.TestCase):
@@ -71,6 +79,9 @@ class HTTPTests(unittest.TestCase):
             self.assertIn(f'href="{path}"', body)
         self.assertNotIn("{{GREETING}}", body)
         self.assertNotIn("/demo", body)
+        self.assertIn('href="https://builder.appservice.azure.com/docs/"', body)
+        self.assertIn('href="https://builder.appservice.azure.com/docs/quickstarts/portal/"', body)
+        self.assertNotIn("https://builderapps.azure.com/docs", body)
 
     def test_root_escapes_public_greeting(self):
         os.environ["SAMPLE_GREETING"] = '<script>alert("Hi")</script> & café'

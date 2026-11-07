@@ -92,7 +92,7 @@ not the current working directory.
 
 ### Deploy your fork with Portal
 
-Follow the [Portal quickstart](https://builderapps.azure.com/docs/quickstarts/portal/)
+Follow the [Portal quickstart](https://builder.appservice.azure.com/docs/quickstarts/portal/)
 using your Private Preview access:
 
 1. Sign in to Portal and select your authorized subscription and resource group.
@@ -134,7 +134,7 @@ In Portal **Variables**, set `SAMPLE_GREETING` and choose **Save and deploy**.
 **Save only** changes desired configuration, not existing runtime processes:
 explicitly deploy afterward. Wait for completion and check `/` again.
 Activating a retained version uses that version's historical values.
-See the [variables guide](https://builderapps.azure.com/docs/guides/variables/).
+See the [variables guide](https://builder.appservice.azure.com/docs/guides/variables/).
 
 ### Push an app change and explicitly redeploy
 
@@ -184,11 +184,11 @@ support still requires end-to-end qualification.
 
 ## Resources
 
-- [App Service Builder documentation](https://builderapps.azure.com/docs/)
-- [Portal quickstart](https://builderapps.azure.com/docs/quickstarts/portal/)
-- [Supported runtimes](https://builderapps.azure.com/docs/reference/runtimes/)
-- [Variables guide](https://builderapps.azure.com/docs/guides/variables/)
-- [More samples](https://builderapps.azure.com/docs/samples/)
+- [App Service Builder documentation](https://builder.appservice.azure.com/docs/)
+- [Portal quickstart](https://builder.appservice.azure.com/docs/quickstarts/portal/)
+- [Supported runtimes](https://builder.appservice.azure.com/docs/reference/runtimes/)
+- [Variables guide](https://builder.appservice.azure.com/docs/guides/variables/)
+- [More samples](https://builder.appservice.azure.com/docs/samples/)
 
 ## Contributing and security
 
