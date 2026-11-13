@@ -202,3 +202,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), the
 [MIT license](LICENSE.md). For security vulnerabilities, follow
 [Microsoft's security reporting guidance](https://aka.ms/SECURITY.md) rather
 than opening a public issue.
+
+The product mark uses the supplied App Service Builder asset in `assets/AppServiceBuilder.svg`. Its SVG is inlined in the root page to preserve the existing routes and security policy. Keep the inline copy and asset in sync when updating the logo.
