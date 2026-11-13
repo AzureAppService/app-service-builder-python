@@ -74,7 +74,11 @@ class HTTPTests(unittest.TestCase):
         self.assertTrue(body.startswith("<!doctype html>"))
         self.assertIn("<title>Python sample", body)
         self.assertIn('<h1 id="greeting">Hello', body)
-        self.assertIn("App Service Builder / python-web: Hello", body)
+        self.assertIn("Python sample for<br>App Service Builder", body)
+        self.assertIn('aria-label="Python"', body)
+        self.assertIn('href="https://docs.python.org/3/"', body)
+        self.assertNotIn("<input", body)
+        self.assertNotIn("counter", body)
         for path in ("/", "/health"):
             self.assertIn(f'href="{path}"', body)
         self.assertNotIn("{{GREETING}}", body)

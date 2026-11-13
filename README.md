@@ -12,7 +12,7 @@ cloud build or deployment.
 
 The visual showcase is served directly at `/`, without a redirect.
 
-![Python root page with a forest-green greeting, configuration example, in-page health check, and customization instructions](docs/images/sample.png)
+![Python root greeting with the official language logo, Builder context and inline health check](docs/images/sample.png)
 
 Real local rendering in Microsoft Edge, not evidence of an Azure deployment.
 **Check app health** displays server liveness on this page without navigating
@@ -24,7 +24,7 @@ to customize `SAMPLE_GREETING` in your own Builder App and deploy the change.
 - `/` returns HTTP 200 and `text/html; charset=utf-8`, displaying the public greeting.
 - `/health` returns HTTP 200 and `OK`; unknown paths return HTTP 404.
 - `/` is a responsive, dependency-free visual introduction with the current
-  public greeting, a Python configuration example, and links to the real routes.
+  public greeting, Python language identity, customization guidance, and links to the real routes.
   `/health` retains its plain-text response.
 - `SAMPLE_GREETING` changes the deliberately public greeting.
 - Root-level `builder.yaml` explicitly selects Python 3.14, the startup command
@@ -87,8 +87,7 @@ and HTTP 404 with `Not found`, respectively. Stop the server with Ctrl+C.
 Do not override `PORT`: this sample always listens on 8080.
 
 Open [http://localhost:8080/](http://localhost:8080/) in a browser for the
-visual showcase. It uses local inline styles and system fonts; no JavaScript,
-external assets, or package installation is needed. `SAMPLE_GREETING` is displayed
+visual showcase. It uses local inline styles and system fonts; no external assets or package installation is needed; inline JavaScript checks health. `SAMPLE_GREETING` is displayed
 as escaped text on this page.
 Keep `demo.html` alongside `app.py`; the server loads it relative to the script,
 not the current working directory.
@@ -204,3 +203,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), the
 than opening a public issue.
 
 The product mark uses the supplied App Service Builder asset in `assets/AppServiceBuilder.svg`. Its SVG is inlined in the root page to preserve the existing routes and security policy. Keep the inline copy and asset in sync when updating the logo.
+
+## Language identity
+
+The page uses the official Python logo and links separately to Python documentation and Builder documentation. The greeting remains simple; no editor or counter was added. Logo provenance and trademark notices are available on the page and the original asset is retained under `assets/`.
