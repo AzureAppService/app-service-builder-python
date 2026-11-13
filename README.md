@@ -12,7 +12,12 @@ cloud build or deployment.
 
 The visual showcase is served directly at `/`, without a redirect.
 
-![Python sample with a forest-green greeting, Python code example, and links to the sample endpoints](https://github.com/user-attachments/assets/58dc465a-1665-485a-9517-234bec7b8a0c)
+![Python root page with a forest-green greeting, configuration example, in-page health check, and customization instructions](docs/images/sample.png)
+
+Real local rendering in Microsoft Edge, not evidence of an Azure deployment.
+**Check app health** displays server liveness on this page without navigating
+to the plain-text response. `/health` remains unchanged. The page explains how
+to customize `SAMPLE_GREETING` in your own Builder App and deploy the change.
 
 ## Features
 

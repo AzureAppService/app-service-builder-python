@@ -25,7 +25,10 @@ FORM: Responsive two-column specimen; a restrained, brief-led light canvas.
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Segoe UI", Arial, sans-serif; }
     a { color: inherit; text-underline-offset: .25em; }
-    a:focus-visible { outline: 3px solid var(--green); outline-offset: 6px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 6px; }
+    button.button { border: 0; font-family: inherit; cursor: pointer; }
+    button:disabled { opacity: .7; cursor: wait; }
+    #health-status { font-size: 13px; line-height: 1.6; max-width: 55ch; color: var(--muted); }
     a:hover { text-decoration-thickness: 2px; }
     .skip { position: absolute; top: -80px; left: 20px; padding: 14px; background: white; z-index: 1; }
     .skip:focus { top: 16px; }
@@ -105,7 +108,7 @@ FORM: Responsive two-column specimen; a restrained, brief-led light canvas.
       <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>App Service Builder</div>
       <nav aria-label="Sample navigation">
         <a href="/">Sample home</a>
-        <a href="https://builder.appservice.azure.com/docs/">Documentation <span aria-hidden="true">↗</span></a>
+        <a href="https://builder.appservice.azure.com/docs/">Builder documentation <span aria-hidden="true">↗</span></a>
       </nav>
     </header>
     <main id="main">
@@ -115,9 +118,11 @@ FORM: Responsive two-column specimen; a restrained, brief-led light canvas.
           <h2>A little Python.<br>A place to begin.</h2>
           <p class="intro">A small HTTP app built with Python's standard library. Explore the sample, change the greeting, and learn to deploy with App Service Builder.</p>
           <div class="actions">
-            <a class="button" href="/health">Open health endpoint <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="https://builder.appservice.azure.com/docs/quickstarts/portal/">Deployment guide</a>
+            <button class="button" type="button" data-health-check data-health-path="/health">Check app health</button>
+            <a class="text-link" href="https://builder.appservice.azure.com/docs/quickstarts/portal/">Builder deployment guide</a>
           </div>
+          <p id="health-status" role="status" aria-live="polite">Checks this server's liveness, not Azure services.</p>
+          <p class="intro">To customize the greeting, set the public <code>SAMPLE_GREETING</code> variable in your Builder App, then save and deploy a new version. Never use a secret as your greeting.</p>
         </div>
         <div class="specimen" aria-label="Python greeting configuration example">
           <div class="specimen-head"><div class="file-label"><span aria-hidden="true">py</span> app.py</div><span class="language">Python 3.14</span></div>
@@ -144,5 +149,23 @@ greeting = (
     </main>
     <footer><p>Python sample / App Service Builder · Private Preview</p><p>For dev/test learning. Not a production HTTP server.</p></footer>
   </div>
+  <script>
+    const button = document.querySelector('[data-health-check]');
+    const status = document.querySelector('#health-status');
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      status.textContent = 'Checking this app...';
+      try {
+        const response = await fetch('/health', { cache: 'no-store', signal: AbortSignal.timeout(5000) });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        if ((await response.text()).trim() !== 'OK') throw new Error('Unexpected health response');
+        status.textContent = 'Healthy: /health returned HTTP 200 and OK. Server liveness only.';
+      } catch (error) {
+        status.textContent = 'Health check failed: ' + error.message + '. Retry the check.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>

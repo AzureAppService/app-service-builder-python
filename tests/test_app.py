@@ -88,7 +88,10 @@ class HTTPTests(unittest.TestCase):
         os.environ["PRIVATE_TEST_VALUE"] = "must-not-appear"
         body = self.get_home()
         self.assertIn("&lt;script&gt;alert(&quot;Hi&quot;)&lt;/script&gt; &amp; café", body)
-        self.assertNotIn("<script>", body)
+        self.assertNotIn("<script>alert", body)
+        self.assertEqual(body.count("<script>"), 1)
+        self.assertIn('data-health-path="/health"', body)
+        self.assertIn('id="health-status" role="status"', body)
         self.assertNotIn(os.environ["PRIVATE_TEST_VALUE"], body)
 
     def test_root_public_greeting(self):
